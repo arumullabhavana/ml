@@ -1,0 +1,33 @@
+import numpy as np
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+def gaussian_rbf(x, c, sigma):
+ return np.exp(-np.linalg.norm(x - c, axis=1)**2 / (2 * sigma**2))
+
+np.random.seed(42)
+X = np.linspace(-5, 5, 100).reshape(-1, 1)
+y = np.sin(X).ravel() + np.random.normal(0, 0.1, X.shape[0])
+
+n_centers = 10
+kmeans = KMeans(n_clusters=n_centers, random_state=42)
+kmeans.fit(X)
+centers = kmeans.cluster_centers_
+
+sigma = 1.0 # Set a fixed sigma
+phi = np.array([gaussian_rbf(x, centers, sigma) for x in X])
+
+phi = np.hstack([np.ones((phi.shape[0], 1)), phi]) # Add bias term
+weights = np.linalg.pinv(phi).dot(y)
+
+y_pred = phi.dot(weights)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(X, y, label="Noisy data", color="gray", alpha=0.6)
+plt.plot(X, np.sin(X), label="True function", color="green")
+plt.plot(X, y_pred, label="RBF Prediction", color="red")
+plt.scatter(centers, np.zeros_like(centers), label="RBF Centers", color="blue")
+plt.legend()
+plt.title("RBF Network for 1D Regression")
+plt.show()
+
