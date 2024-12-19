@@ -39,33 +39,11 @@ clf.fit(X_train, y_train)
 clf.score(X_test,y_test)
 
 clf.predict(emails)
+y_pred = clf.predict(X_test)
 
-import matplotlib.pyplot as plt
-from sklearn.datasets import load_iris
 
-# Load the Iris dataset
-iris = load_iris()
-X = iris.data  # Features
-y = iris.target  # Target variable (species)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+print(f'Precision:{precision:.2f}')
+print(f'Recall:{recall:.2f}')
 
-# Get the feature names
-feature_names = iris.feature_names
-
-# Create a scatter plot
-plt.figure(figsize=(8, 6))  # Set figure size
-
-# Plot sepal length vs. sepal width
-plt.scatter(X[y == 0, 0], X[y == 0, 1], color='red', label='Setosa')
-plt.scatter(X[y == 1, 0], X[y == 1, 1], color='blue', label='Versicolor')
-plt.scatter(X[y == 2, 0], X[y == 2, 1], color='green', label='Virginica')
-
-# Set labels and title
-plt.xlabel(feature_names[0])
-plt.ylabel(feature_names[1])
-plt.title('Iris Dataset Scatter Plot')
-
-# Add legend
-plt.legend()
-
-# Show the plot
-plt.show()
