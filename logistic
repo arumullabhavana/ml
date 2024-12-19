@@ -1,0 +1,66 @@
+import pandas as pd
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn import datasets
+df=pd.read_csv(r"Heart(logistic).csv")
+print(df)
+
+df=df.drop(columns= 'Unnamed: 0')
+print(df)
+
+df['ChestPain']=df['ChestPain'].astype('category')
+df['ChestPain']=df['ChestPain'].cat.codes
+print(df)
+
+df['Thal']=df['Thal'].astype('category')
+df['Thal']=df['Thal'].cat.codes
+print(df)
+df['AHD']=df['AHD'].astype('category')
+df['AHD']=df['AHD'].cat.codes
+print(df)
+
+df.isnull().sum()
+
+df=df.dropna()
+df
+
+x=df.drop(columns='AHD')
+df
+y=df['AHD']
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.30,random_state=42)
+x_train
+
+x_test
+
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+x_train_scaled=scaler.fit_transform(x_train)
+x_test_scaled=scaler.transform(x_test)
+x_train_scaled
+
+x_train_scaled
+
+from sklearn.linear_model import LogisticRegression
+lr=LogisticRegression()
+
+lr.fit(x_train_scaled , y_train)
+
+y_pred_train=lr.predict(x_train_scaled)
+y
+import numpy as np
+y_pred_train=np.array(y_pred_train).reshape(-1,1)
+y_pred_train.flatten()
+
+lr.score(x_train_scaled,y_train)
+
+lr.score(x_test_scaled,y_test)
+
+df.corr()
+
+corr =df.corr()
+fig, ax=plt.subplots(figsize=(10,6))
+sns.heatmap(corr, annot=True,ax=ax)
