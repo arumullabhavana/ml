@@ -1,0 +1,50 @@
+
+  def find(n):
+  r=n*n;
+  return r
+s=find(3)
+print(s)
+
+import math
+a=pow(2,4)
+print(a)
+b=math.sqrt(25)
+print(b)
+
+import numpy as np
+a=np.array([1,2,3,4,5])
+print(a)
+
+import numpy as np
+arr=np.array(34)
+print(arr)
+
+import numpy as np
+arr=np.array([[1,2,7],[3,4,5]])
+print(arr)
+
+import numpy as np
+import pandas as pd
+ser=pd.Series()
+d=np.array(['f','g','g'])
+ser=pd.Series(d)
+print(ser)
+
+import pandas as pd
+df=pd.DataFrame()
+print(df)
+l=['g','f','d','dd']
+d=pd.DataFrame(l)
+print(d)
+df=pd.read_csv(r'iris.csv')
+print(df)
+df.head()
+df.tail()
+df.info()
+df.isnull().sum()
+df.sample(4)
+df.columns
+df.value_counts()
+df['sepal_length'].value_counts()
+df.nlargest(3,'sepal_length')
+df.nsmallest(3,'sepal_length')
