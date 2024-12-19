@@ -1,0 +1,57 @@
+import pandas as pd
+df=pd.read_csv(r'/dataset.csv')
+df
+inputs=df.drop('Answer',axis='columns')
+inputs
+from sklearn.preprocessing import LabelEncoder
+le_Outlook=LabelEncoder()
+le_Temperature=LabelEncoder()
+le_Humidity=LabelEncoder()
+le_Wind=LabelEncoder()
+inputs['Outlook_n']=le_Outlook.fit_transform(inputs['Outlook'])
+inputs['Temperature_n']=le_Temperature.fit_transform(inputs['Temperature'])
+inputs['Humidity_n']=le_Humidity.fit_transform(inputs['Humidity'])
+inputs['Wind_n']=le_Wind.fit_transform(inputs['Wind'])
+inputs
+inputs_n=inputs.drop(['Outlook','Temperature','Humidity','Wind'],axis="columns")
+inputs_n
+target=df['Answer']
+target
+
+from sklearn import tree
+model=tree.DecisionTreeClassifier(criterion='entropy',random_state=0)
+model.fit(inputs_n,target)
+
+model.score(inputs_n,target)
+
+model.predict([[2,1,0,1]])
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10,10))
+tree.plot_tree(model,filled=True)
+
+
+plt.figure(figsize=(10,10))
+feature_cols=['Outlook_n','Temperature_n','Humidity_n','Wind_n']
+tree.plot_tree(model,class_names=['yes','no'],
+               filled=True,
+               rounded=True,
+               proportion=True,
+               feature_names=feature_cols,max_depth=8)
+plt.show()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(inputs_n,target,test_size=0.2,random_state=110)
+
+len(x_train)
+
+len(y_train)
+
+from sklearn import metrics
+clf=tree.DecisionTreeClassifier(criterion='entropy',random_state=0)
+clf=clf.fit(x_train,y_train)
+y_pred=clf.predict(x_test)
+clf.score(x_train,y_train)
+
+
+print("accuuracy:",metrics.accuracy_score(y_pred,y_test))
