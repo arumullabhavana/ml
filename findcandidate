@@ -1,0 +1,44 @@
+
+for i,val in enumerate(features):
+  if target[i]=="yes":
+    for x in range(len(hypothesis)):
+      if val[x]!=hypothesis[x]:
+        hypothesis[x]='?'
+print(hypothesis)
+import numpy as np
+import pandas as pd
+data=pd.DataFrame(data=pd.read_csv(r"colors.csv"))
+concepts=np.array(data.iloc[:,0:-1])
+print(concepts)
+target=np.array(data.iloc[:,-1])
+print(target)
+def learn(concepts,target):
+  specific=concepts[0].copy()
+  print("initialization of specific and general")
+  print(specific)
+  general=[["?" for i in range(len(specific))] for i in range(len(specific))]
+  print(general)
+  for i,h in enumerate(concepts):
+    if target[i]=="yes":
+      for x in range(len(specific)):
+        if h[x]!=specific[x]:
+          specific[x]='?'
+          general[x][x]='?'
+        print(specific)
+    print(specific)
+    if target[i]=="no":
+      for x in range(len(specific)):
+        if h[x]!=specific[x]:
+          general[x][x]=specific[x]
+        else:
+          general[x][x]='?'
+    print("steps of candidate elimination algorithm ",i+1)
+    print(specific)
+    print(general)
+  indices=[i for i,val in enumerate(general) if val==['?','?','?','?','?','?']]
+  for i in indices:
+    general.remove(['?','?','?','?','?','?'])
+  return specific,general
+s_final,g_final=learn(concepts,target)
+print("Final specific:",s_final,sep="\n")
+print("Final generic:",g_final,sep="\n")
