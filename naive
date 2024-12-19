@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 df = pd.read_csv(r"spam(Naive).csv")
 df.head()
 
@@ -42,8 +43,11 @@ clf.predict(emails)
 y_pred = clf.predict(X_test)
 
 
+accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
-print(f'Precision:{precision:.2f}')
-print(f'Recall:{recall:.2f}')
+# Print results
+print(f'Accuracy: {accuracy:.2f}')
+print(f'Precision: {precision:.2f}')
+print(f'Recall: {recall:.2f}')
 
