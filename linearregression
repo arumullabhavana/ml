@@ -1,0 +1,88 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn import datasets
+df=pd.read_csv(r'iris.csv')
+print(df)
+
+df.info()
+
+df['species'].value_counts()
+
+df.isnull().sum()
+
+df['sepal_length'].hist()
+
+df['sepal_width'].hist()
+
+colors=['red','orange','blue']
+species=['virginica','setosa','versicolor']
+
+for i in range(3):
+ x=df[df['species']==species[i]]
+ plt.scatter(x['sepal_length'],x['sepal_width'],c=colors[i],label=species[i])
+plt.xlabel("Sepal length")
+plt.ylabel("Sepal width")
+plt.legend()
+
+for i in range(3):
+ x=df[df['species']==species[i]]
+ plt.scatter(x['petal_length'],x['petal_width'],c=colors[i],label=species[i])
+plt.xlabel("petal length")
+plt.ylabel("petal width")
+plt.legend()
+
+df=df[['petal_width','petal_length']] #linear regression with two variables
+print(df)
+
+x=df['petal_width']
+y=df['petal_length']
+
+import matplotlib.pyplot as plt
+plt.scatter(x,y)
+
+import matplotlib.pyplot as plt
+plt.scatter(x,y)
+plt.xlabel('petal_width')
+plt.xlabel('petal_length')
+
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.30,random_state=20)
+
+import numpy as np
+x_train=np.array(x_train).reshape(-1,1)
+x_train
+
+import numpy as np
+x_test=np.array(x_test).reshape(-1,1)
+x_test
+
+from sklearn.linear_model import LinearRegression
+lr=LinearRegression()
+lr.fit(x_train , y_train)
+
+c=lr.intercept_
+c
+
+m=lr.coef_
+m
+
+y_pred_train=m*x_train+c
+y_pred_train.flatten()
+
+import matplotlib.pyplot as plt
+plt.scatter(x_train,y_train)
+plt.plot(x_train,y_pred_train,color = 'red')
+plt.xlabel('petal_width')
+plt.xlabel('petal_length')
+
+y_pred_test=m*x_test+c
+y_pred_test.flatten()
+
+import matplotlib.pyplot as plt
+plt.scatter(x_test,y_test)
+plt.plot(x_test,y_pred_test,color = 'red')
+plt.xlabel('petal_width')
+plt.xlabel('petal_length')
