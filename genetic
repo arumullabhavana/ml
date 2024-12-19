@@ -1,0 +1,58 @@
+import random
+
+def fitness_function(x):
+    return x**2  # Objective function to maximize
+
+def generate_population(size, lower_bound, upper_bound):
+    return [random.uniform(lower_bound, upper_bound) for _ in range(size)]
+
+def select_parents(population, fitnesses):
+    total_fitness = sum(fitnesses)
+    probabilities = [f / total_fitness for f in fitnesses]
+    return random.choices(population, weights=probabilities, k=2)
+
+def crossover(parent1, parent2):
+    alpha = random.random()  # Blend ratio
+    child = alpha * parent1 + (1 - alpha) * parent2
+    return child
+
+def mutate(individual, mutation_rate, lower_bound, upper_bound):
+    if random.random() < mutation_rate:
+        return random.uniform(lower_bound, upper_bound)
+    return individual
+
+def genetic_algorithm(
+    fitness_function,
+    population_size=20,
+    generations=50,
+    mutation_rate=0.1,
+    lower_bound=-10,
+    upper_bound=10
+):
+    population = generate_population(population_size, lower_bound, upper_bound)
+
+    for generation in range(generations):
+  
+        fitnesses = [fitness_function(ind) for ind in population]
+
+        best_individual = population[fitnesses.index(max(fitnesses))]
+        print(f"Generation {generation}: Best = {best_individual}, Fitness = {max(fitnesses)}")
+
+        new_population = []
+        for _ in range(population_size):
+           
+            parent1, parent2 = select_parents(population, fitnesses)
+         
+            child = crossover(parent1, parent2)
+        
+            child = mutate(child, mutation_rate, lower_bound, upper_bound)
+            new_population.append(child)
+
+        population = new_population
+
+    fitnesses = [fitness_function(ind) for ind in population]
+    best_individual = population[fitnesses.index(max(fitnesses))]
+    return best_individual, max(fitnesses)
+
+best, fitness = genetic_algorithm(fitness_function)
+print(f"Optimal solution: {best}, Fitness: {fitness}")
