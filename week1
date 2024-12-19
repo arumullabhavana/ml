@@ -1,0 +1,152 @@
+num1 = int(input("Enter the first number: "))
+num2 = int(input("Enter the second number: "))
+
+print("Sum:", num1 + num2)
+print("Difference:", num1 - num2)
+print("Product:", num1 * num2)
+print("Quotient:", num1 / num2)
+
+
+str1 = input("Enter the first string: ")
+str2 = input("Enter the second string: ")
+
+print("Concatenation:", str1 + str2)
+print("Length of first string:", len(str1))
+print("Length of second string:", len(str2))
+
+
+
+
+list1 = input("Enter the first list elements (comma-separated): ").split(",")
+list2 = input("Enter the second list elements (comma-separated): ").split(",")
+
+print("Concatenation:", list1 + list2)
+print("Length of first list:", len(list1))
+print("Length of second list:", len(list2))
+
+
+
+tuple1 = input("Enter the first tuple elements (comma-separated): ").split(",")
+tuple2 = input("Enter the second tuple elements (comma-separated): ").split(",")
+
+print("Concatenation:", tuple1 + tuple2)
+print("Length of first tuple:", len(tuple1))
+print("Length of second tuple:", len(tuple2))
+
+5
+
+dict1 = {}
+dict2 = {}
+
+key1 = input("Enter the key for the first dictionary: ")
+value1 = input("Enter the value for the first dictionary: ")
+dict1[key1] = value1
+
+key2 = input("Enter the key for the second dictionary: ")
+value2 = input("Enter the value for the second dictionary: ")
+dict2[key2] = value2
+
+print("First dictionary:", dict1)
+print("Second dictionary:", dict2)
+print("Merged dictionary:", {**dict1,**dict2})
+
+
+def find_largest_number(num_list):
+    return max(num_list)
+numbers = [12, 45, 7, 23, 56, 89, 34]
+largest_number = find_largest_number(numbers)
+print("The largest number in the list is:", largest_number)
+
+a= int(input("Enter a : "))
+b= int(input("Enter b : "))
+c= int(input("Enter c : "))
+if a>b and a>c:
+  print(a)
+elif b>a and b>c:
+  print(b)
+else:
+  print(c)
+
+
+my_tuple = (1, 2, 3, 4, 5)
+print("Original Tuple:", my_tuple)
+# Indexing
+print("\nIndexing:")
+print("First element:", my_tuple[0])
+print("Last element:", my_tuple[-1])
+# Slicing
+print("\nSlicing:")
+print("Elements from index 1 to 3:", my_tuple[1:4])
+print("Elements from start to index 3:", my_tuple[:4])
+print("Elements from index 2 to end:", my_tuple[2:])
+# Concatenation
+print("\nConcatenation:")
+tuple2 = (6, 7, 8)
+print("Concatenated Tuple:", my_tuple + tuple2)
+# Repetition
+print("\nRepetition:")
+print("Repeated Tuple:", my_tuple * 2)
+# Length
+print("\nLength:")
+print("Length of the tuple:", len(my_tuple))
+# Converting to list
+print("\nConverting to list:")
+my_list = list(my_tuple)
+print("Converted list:", my_list)
+# Converting to set
+print("\nConverting to set:")
+my_set = set(my_tuple)
+print("Converted set:", my_set)
+
+
+number = int(input("Enter a number to print its multiplication table: "))
+for i in range(1, 11):
+    print(number, "x", i, "=", number * i)
+
+data = {'a': 10, 'b': 50, 'c': 30, 'd': 20}
+max_value = max(data.values())
+min_value = min(data.values())
+print(f"Maximum value: {max_value}")
+print(f"Minimum value: {min_value}")
+
+
+with open("input.txt", "r") as file:
+    content = file.read()
+words = content.split()
+word_count = {}
+for word in words:
+    if word in word_count:
+        word_count[word] += 1
+    else:
+        word_count[word] = 1
+print(word_count)
+
+
+
+data = {'a': 10, 'b': 20, 'c': 5, 'd': 15}
+max_value = max(data.values())
+min_value = min(data.values())
+print("Maximum value:", max_value)
+print("Minimum value:", min_value)
+
+
+string = input("Enter a string: ")
+if string == string[::-1]:
+    print("The string is a palindrome.")
+else:
+    print("The string is not a palindrome.")
+
+
+
+input_list = input("Enter numbers separated by spaces: ").split()
+numbers = [int(num) for num in input_list]
+largest = numbers[0]
+for num in numbers:
+    if num > largest:
+        largest = num
+print("The largest number is:", largest)
+
+
+numbers = list(map(int, input("Enter numbers separated by spaces: ").split()))
+largest = max(numbers)
+print(f"The largest number in the list is: {largest}")
