@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+df = pd.read_csv("diabetes.csv")
+df.head()
+
+df.info()
+
+df.describe()
+
+means = df.iloc[:, 1:6].mean()
+means
+
+nonzeros = list(df.columns[1:6])
+for column in nonzeros:
+ df[column] = df[column].replace(0, means[column])
+df.min()
+
+X = df.iloc[:, 0:7].to_numpy()
+y = df.iloc[:, 8].to_numpy()
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+
+knn.score(X_test, y_test)
+
+from sklearn.metrics import confusion_matrix
+y_pred = knn.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+cm
+
+%matplotlib inline
+import matplotlib.pyplot as plt
+import seaborn as sn
+plt.figure(figsize=(7,5))
+sn.heatmap(cm, annot=True)
+plt.xlabel('Predicted')
+plt.ylabel('Truth')
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+
