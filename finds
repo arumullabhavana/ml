@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+df=pd.read_csv(r"finds.csv")
+df
+features=np.array(df)[:,:-1]
+print("features in the dataset\n",features)
+target=np.array(df)[:,-1]
+print("target concet\n",target)
+for i,val in enumerate(target):
+  if val=="yes":
+    hypothesis=features[i].copy()
+    break
+print(hypothesis)
+for i,val in enumerate(features):
+  if target[i]=="yes":
+    for x in range(len(hypothesis)):
+      if val[x]!=hypothesis[x]:
+        hypothesis[x]='?'
+print(hypothesis)
