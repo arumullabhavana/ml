@@ -1,0 +1,47 @@
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+data = load_iris()
+X = data.data
+y = data.target
+
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=42)
+
+full_tree = DecisionTreeClassifier(random_state=42,criterion='entropy')
+full_tree.fit(X_train, y_train)
+
+plt.figure(figsize=(12, 8))
+plot_tree(full_tree, filled=True)
+plt.title("Full Decision Tree")
+plt.show()
+
+def post_prune(tree, X_val, y_val):
+
+  initial_accuracy = tree.score(X_val, y_val)
+  for node in range(tree.tree_.node_count):
+    if tree.tree_.children_left[node] == tree.tree_.children_right[node]:
+      continue
+    left_child = tree.tree_.children_left[node]
+    right_child = tree.tree_.children_right[node]
+
+    tree.tree_.children_left[node] = tree.tree_.children_right[node] = -1
+    tree.tree_.value[node] = np.mean(tree.tree_.value[left_child:right_child + 1], axis=0)
+# Measure accuracy after pruning
+    pruned_accuracy = tree.score(X_val, y_val)
+# If pruning decreases accuracy, restore the original children
+    if pruned_accuracy < initial_accuracy:
+      tree.tree_.children_left[node] = left_child
+      tree.tree_.children_right[node] = right_child
+    return tree
+
+pruned_tree = post_prune(full_tree, X_val, y_val)
+
+plt.figure(figsize=(12, 8))
+plot_tree(pruned_tree, filled=True)
+plt.title("Pruned Decision Tree")
+plt.show()
+
+print(f"Accuracy of full tree: {full_tree.score(X_val, y_val):.2f}")
+print(f"Accuracy of pruned tree: {pruned_tree.score(X_val, y_val):.2f}")
